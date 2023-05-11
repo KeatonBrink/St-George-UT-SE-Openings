@@ -21,9 +21,9 @@ def scrape():
     websiteData["vasion"] = vasionscrape()
     websiteData["wilson"] = wilsonscrape()
     websiteData["busybusy"] = busybusyscrape()
-    for key, value in websiteData.items():
-        print(key)
-        print(value)
+    websiteData["skywest"] = skywestscrape()
+    websiteData["scitools"] = scitoolsscrape()
+    return websiteData
 
 def tcnscrape():
     url = "https://tcn.applytojob.com/"
@@ -102,3 +102,16 @@ def busybusyscrape():
             retItems.append([page[index-1].strip(), page[index].strip()])
     driver.close()
     return retItems
+
+
+def skywestscrape():
+    # url = "https://jobs.skywest.com/skywest-airlines/jobs?_gl=1*99oph0*_ga*ODUyNTYxNDc1LjE2ODM4MTMyMjA.*_ga_92BB56KZPF*MTY4MzgxMzIyMC4xLjAuMTY4MzgxMzIyMC42MC4wLjA.&_ga=2.45639524.1127320815.1683813221-852561475.1683813220&limit=100&page=1"
+    # driver = webdriver.Firefox()
+    # driver.get(url)
+    # print(driver.title)
+    # time.sleep(timeDelay)
+
+    return []
+
+def scitoolsscrape():
+    return []
