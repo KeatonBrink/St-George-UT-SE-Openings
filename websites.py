@@ -44,7 +44,6 @@ def tcnscrape():
                 if len(curEntry) >= 2:
                     break
         retItems.append(curEntry)
-    # print(retItems)
     return retItems
 
 def zonosscrape():
@@ -54,7 +53,6 @@ def vasionscrape():
     url = "https://apply.workable.com/vasion/#jobs"
     driver = webdriver.Firefox()
     driver.get(url)
-    print(driver.title)
     time.sleep(timeDelay)
     posts = driver.find_elements(By.CLASS_NAME, "styles--1vo9F")
     retItems = []
@@ -66,7 +64,6 @@ def vasionscrape():
             retItems.append(curCombo)
         except:
             print("Error vasion grabbing post")
-    # print(retItems)
     driver.close()
     return retItems
 
@@ -74,7 +71,6 @@ def wilsonscrape():
     url = "https://wilsonelectronics.applicantpro.com/jobs/"
     driver = webdriver.Firefox()
     driver.get(url)
-    print(driver.title)
     time.sleep(timeDelay)
     posts = driver.find_elements(By.CLASS_NAME, "strip-side-borders")
     retItems = []
@@ -92,7 +88,6 @@ def busybusyscrape():
     url = "https://busybusy.com/careers/"
     driver = webdriver.Firefox()
     driver.get(url)
-    print(driver.title)
     time.sleep(timeDelay)
     page = driver.find_element(By.TAG_NAME, "body")
     retItems = []
