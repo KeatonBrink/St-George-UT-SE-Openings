@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import websites
 import datastorage
 from updateemail import send_email_notification

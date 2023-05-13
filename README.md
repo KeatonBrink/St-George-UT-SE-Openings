@@ -12,6 +12,8 @@ Requires mailgun api for emails, which is placed in a mailgundata.py file.
 
 Note, the reciever is your personal email that will recieve the updates.
 
+Selenium and firefox is required for the scraping.
+
 # Usage
 
 Run with python3:

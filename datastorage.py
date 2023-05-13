@@ -18,8 +18,6 @@ def loadData(prevDate):
         retDict[item[0]] = []
     for item in result:
         retDict[item[0]].append([item[1], item[2]])
-    # Debugging
-    print(retDict)
     return retDict
 
 
@@ -37,7 +35,7 @@ def storeData(websiteData):
                 company TEXT NOT NULL,
                 job TEXT NOT NULL,
                 place TEXT NOT NULL,
-                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                created_at DATE NOT NULL DEFAULT CURRENT_DATE
             )
             ''')
     for key, values in websiteData.items():
@@ -65,6 +63,42 @@ def filterData(webData):
     # Load contents of last data update into correct format
     prevData = loadData(prevDate)
     # Zipper compare contents, generating new job information
+    newData = {}
+    for curKey, curValues in webData.items():
+        if curKey in prevData:
+            curSValues = sorted(curValues, key = lambda x: (x[0], x[1]))
+            prevSValues = sorted(prevData[curKey], key = lambda x: (x[0], x[1]))
+            cSVIndex = 0
+            pSVIndex = 0
+            newData[curKey] = []
+            while cSVIndex < len(curSValues) and pSVIndex < len(prevSValues):
+                if curSValues[cSVIndex][0] != prevSValues[pSVIndex][0]:
+                    if cSVIndex < len(curSValues) - 1 and curSValues[cSVIndex+1][0] == prevSValues[pSVIndex][0]:
+                        newData[curKey].append(curSValues[cSVIndex])
+                        cSVIndex += 2
+                        pSVIndex += 1
+                    elif pSVIndex < len(prevSValues) - 1 and prevSValues[pSVIndex+1][0] == curSValues[cSVIndex][0]:
+                        pSVIndex += 2
+                        cSVIndex += 1
+                        # Basically the default case where more than one thing different sequentially.
+                        # This could be updated to be more concise, but it is more or less fine.
+                    else: 
+                        newData[curKey] = curSValues[cSVIndex:]
+                        cSVIndex = len(curSValues)
+                        pSVIndex = len(prevSValues)
+                else:
+                    pSVIndex += 1
+                    cSVIndex += 1
+            while cSVIndex < len(curSValues):
+                newData[curKey].append(curSValues[cSVIndex])
+            if len(newData[curKey]) == 0:
+                newData.pop(curKey)
+        elif len(curValues) > 0:
+            newData[curKey] = curValues
+    if len(newData) == 0:
+        return ""
+    return emailFormattedData(webData)
+
 
 def emailFormattedData(webData):
     formattedString = "Here are your job updates:\n"
