@@ -100,13 +100,22 @@ def busybusyscrape():
 
 
 def skywestscrape():
+    url = "https://jobs.skywest.com/skywest-airlines/jobs?_gl=1*99oph0*_ga*ODUyNTYxNDc1LjE2ODM4MTMyMjA.*_ga_92BB56KZPF*MTY4MzgxMzIyMC4xLjAuMTY4MzgxMzIyMC42MC4wLjA.&_ga=2.45639524.1127320815.1683813221-852561475.1683813220&limit=100&page=1&categories=Information%20Technology"
+    # This url will work for all jobs from skywest, not only the IT jobs
     # url = "https://jobs.skywest.com/skywest-airlines/jobs?_gl=1*99oph0*_ga*ODUyNTYxNDc1LjE2ODM4MTMyMjA.*_ga_92BB56KZPF*MTY4MzgxMzIyMC4xLjAuMTY4MzgxMzIyMC42MC4wLjA.&_ga=2.45639524.1127320815.1683813221-852561475.1683813220&limit=100&page=1"
-    # driver = webdriver.Firefox()
-    # driver.get(url)
-    # print(driver.title)
-    # time.sleep(timeDelay)
-
-    return []
+    driver = webdriver.Firefox()
+    driver.get(url)
+    print(driver.title)
+    time.sleep(timeDelay)
+    page = driver.find_element(By.TAG_NAME, "mat-accordion")
+    print(page.text)
+    page = page.text.split('\n')
+    retItems = []
+    for index, item in enumerate(page):
+        if item == "St. George, Utah":
+            retItems.append([page[index-2], page[index]])
+    driver.close()
+    return retItems
 
 def scitoolsscrape():
     return []
