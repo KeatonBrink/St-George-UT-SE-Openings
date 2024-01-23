@@ -1,6 +1,6 @@
 # St-George-UT-SE-Openings
 
-A simple script for scraping SE jobs in St. George
+A script for scraping SE jobs in St. George, entering them in a sqlite3 db, and emailing openings to a designated email.
 
 # Installation
 
